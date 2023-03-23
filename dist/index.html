@@ -5,13 +5,52 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="./assets/fontawesome/css/all.min.css">
+        <link rel="stylesheet" href="./assets/mdb/css/mdb.min.css">
         <link rel="stylesheet" href="./style.css">
         <title>Tower defense BETA!</title>
     </head>
     <body>
+        <header>
+
+        </header>
+        <section id="menu" class="container d-flex flex-column gap-3">
+            <div class="save-creator container d-flex flex-column gap-2">
+                <input autocomplete="off" id="name" placeholder="Unnamed save">
+                <button class="btn btn-primary" id="create"><i class="fas fa-circle-plus"></i> Create</button>
+                <button class="btn btn-primary" id="map-edit"><i class="fas fa-pen-ruler"></i> Map Editor</button>
+            </div>
+            <div class="save-loader container d-flex flex-column gap-2">
+                <select id="saves" class="w-100"></select>
+                <div class="d-flex flex-row gap-2">
+                    <button id="load" class="btn btn-outline-primary w-50" disabled><i class="fas fa-play"></i> Load</button>
+                    <button id="delete" class="btn btn-outline-danger w-50" disabled><i class="fas fa-trash"></i> Delete</button>
+                </div>
+            </div>
+        </section>
+
+        <div id="log" class="log flex-column align-items-center">
+            <div class="log-header">
+                <span id="log-title">Game Log</span>
+                <span id="log-close">` to close</span>
+            </div>
+            <div id="log-entries"></div>
+        </div>
+
+        <main>
+            <section class="loader">
+                <span id="title">Loading assets...</span>
+                <span id="percent">54%</span>
+            </section>
+            <div class="shop">
+                <header>Towers</header>
+                <div id="towers"></div>
+            </div>
+            <canvas id="game"></canvas>
+        </main>
+
         <script src="./assets/fontawesome/js/all.min.js"></script>
-        <script src="./assets/mdb/js/mdb.min.js"></script>
         <script src="./assets/jquery/jquery.min.js"></script>
+        <script src="./assets/mdb/js/mdb.min.js"></script>
         <script src="./bundle.js"></script>
     </body>
 </html>

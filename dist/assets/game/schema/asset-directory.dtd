@@ -1,0 +1,9 @@
+<!ELEMENT assets (asset*)>
+<!ELEMENT asset (type,name,path,dims?)>
+<!ELEMENT type (#PCDATA)>
+<!ELEMENT name (#PCDATA)>
+<!ELEMENT path (#PCDATA)>
+<!ELEMENT dims EMPTY>
+
+<!ATTLIST assets type (content-asset) #REQUIRED>
+<!ATTLIST dims width CDATA #REQUIRED><!ATTLIST dims height CDATA #REQUIRED>

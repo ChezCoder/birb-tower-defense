@@ -1,0 +1,7 @@
+<!ELEMENT assets (data*)>
+<!ELEMENT data (type,name,path)>
+<!ELEMENT type (#PCDATA)>
+<!ELEMENT name (#PCDATA)>
+<!ELEMENT path (#PCDATA)>
+
+<!ATTLIST assets type (data-asset) #REQUIRED>

@@ -1,0 +1,186 @@
+{
+    "$schema": "../../schema/entity.schema.json",
+    "entities": [{
+        "name": "Sparrow Egg",
+        "speed": 0.8,
+        "cash": 1,
+        "hp": 1,
+        "to": [],
+        "texture": {
+            "image": "Sparrow Egg"
+        }
+    }, {
+        "name": "Bluebird Egg",
+        "speed": 0.9,
+        "cash": 1,
+        "hp": 1,
+        "to": [{
+            "name": "Sparrow Egg",
+            "count": 1
+        }],
+        "texture": {
+            "image": "Bluebird Egg"
+        }
+    }, {
+        "name": "Blackbird Egg",
+        "speed": 1.0,
+        "cash": 1,
+        "hp": 1,
+        "to": [{
+            "name": "Bluebird Egg",
+            "count": 1
+        }],
+        "texture": {
+            "image": "Blackbird Egg"
+        }
+    }, {
+        "name": "Quail Egg",
+        "speed": 1.25,
+        "cash": 1,
+        "hp": 1,
+        "to": [{
+            "name": "Blackbird Egg",
+            "count": 1
+        }],
+        "texture": {
+            "image": "Quail Egg"
+        }
+    }, {
+        "name": "Dove Egg",
+        "speed": 1.40,
+        "cash": 1,
+        "hp": 1,
+        "to": [{
+            "name": "Quail Egg",
+            "count": 1
+        }],
+        "texture": {
+            "image": "Null Egg"
+        }
+    }, {
+        "name": "Stork Egg",
+        "speed": 1.65,
+        "cash": 1,
+        "hp": 1,
+        "to": [{
+            "name": "Dove Egg",
+            "count": 1
+        }],
+        "texture": {
+            "image": "Null Egg"
+        }
+    }, {
+        "name": "Heron Egg",
+        "speed": 1.75,
+        "cash": 1,
+        "hp": 1,
+        "to": [{
+            "name": "Stork Egg",
+            "count": 1
+        }],
+        "texture": {
+            "image": "Null Egg"
+        }
+    }, {
+        "name": "Chicken Egg",
+        "speed": 2,
+        "cash": 1,
+        "hp": 1,
+        "to": [{
+            "name": "Heron Egg",
+            "count": 1
+        }],
+        "texture": {
+            "image": "Null Egg"
+        }
+    }, {
+        "name": "Duck Egg",
+        "speed": 2,
+        "cash": 1,
+        "hp": 1,
+        "to": [{
+            "name": "Heron Egg",
+            "count": 1
+        }],
+        "texture": {
+            "image": "Null Egg"
+        }
+    }, {
+        "name": "Goose Egg",
+        "speed": 3.25,
+        "cash": 1,
+        "hp": 1,
+        "to": [{
+            "name": "Chicken Egg",
+            "count": 1
+        }, {
+            "name": "Duck Egg",
+            "count": 1
+        }],
+        "texture": {
+            "image": "Null Egg"
+        }
+    }, {
+        "name": "Turkey Egg",
+        "speed": 4,
+        "cash": 1,
+        "hp": 1,
+        "to": [{
+            "name": "Goose Egg",
+            "count": 1
+        }],
+        "texture": {
+            "image": "Null Egg"
+        }
+    },
+    
+    
+    
+    
+    
+    
+    
+    {
+        "name": "Emu Egg",
+        "speed": 0.4,
+        "cash": 0,
+        "hp": 100,
+        "to": [{
+            "name": "Turkey Egg",
+            "count": 5
+        }],
+        "texture": {
+            "image": "Null Egg"
+        }
+    }, {
+        "name": "Rhea Egg",
+        "speed": 0.3,
+        "cash": 0,
+        "hp": 250,
+        "to": [{
+            "name": "Emu Egg",
+            "count": 2
+        }, {
+            "name": "Turkey Egg",
+            "count": 3
+        }],
+        "texture": {
+            "image": "Null Egg"
+        }
+    }, {
+        "name": "Ostrich Egg",
+        "speed": 0.25,
+        "cash": 0,
+        "hp": 501,
+        "to": [{
+            "name": "Rhea Egg",
+            "count": 2
+        }, {
+            "name": "Turkey Egg",
+            "count": 3
+        }],
+        "texture": {
+            "image": "Null Egg"
+        }
+    }]
+}

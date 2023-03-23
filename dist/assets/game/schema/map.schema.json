@@ -1,0 +1,140 @@
+{
+    "$schema": "http://json-schema.org/schema",
+    "required": [
+        "path",
+        "decoration"
+    ],
+    "properties": {
+        "path": {
+            "type": "object",
+            "required": [ "handles" ],
+            "properties": {
+                "handles": {
+                    "type": "array",
+                    "minItems": 2,
+                    "items": {
+                        "required": [
+                            "point"
+                        ],
+                        "type": "object",
+                        "anyOf": [{
+                            "not": {
+                                "anyOf": [{
+                                    "required": [ "handle1" ]
+                                }, {
+                                    "required": [ "handle2" ]
+                                }]
+                            }
+                        }, {
+                            "required": [ "handle1", "handle2" ]
+                        }],
+                        "properties": {
+                            "point": { "$ref": "#/$defs/vec" },
+                            "handle1": {
+                                "$ref": "#/$defs/vec"
+                            },
+                            "handle2": {
+                                "$ref": "#/$defs/vec"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "decoration": {
+            "type": "object",
+            "properties": {
+                "background": { "$ref": "#/$defs/animatable-image" },
+                "objects": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "required": [
+                            "image",
+                            "pos"
+                        ],
+                        "properties": {
+                            "image": { "$ref": "#/$defs/animatable-image" },
+                            "pos": { "$ref": "#/$defs/vec" },
+                            "dims": {
+                                "minProperties": 1,
+                                "$ref": "#/$defs/dims"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "towerExclusionZones": {
+            "required": [ "zones" ],
+            "properties": {
+                "zones": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "required": [
+                            "pos",
+                            "dims"
+                        ],
+                        "properties": {
+                            "pos": { "$ref": "#/$defs/vec" },
+                            "dims": {
+                                "minProperties": 2,
+                                "$ref": "#/$defs/dims"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "$defs": {
+        "vec": {
+            "type": "object",
+            "required": [ "x", "y" ],
+            "default": {
+                "x": 0,
+                "y": 0
+            },
+            "properties": {
+                "x": {
+                    "type": "number",
+                    "default": 0
+                },
+                "y": {
+                    "type": "number",
+                    "default": 0
+                }
+            }
+        },
+        "dims": {
+            "type": "object",
+            "default": {
+                "width": 100,
+                "height": 100
+            },
+            "properties": {
+                "width": {
+                    "type": "number",
+                    "minimum": 0
+                },
+                "height": {
+                    "type": "number",
+                    "minimum": 0
+                }
+            }
+        },
+        "animatable-image": {
+            "type": [
+                "string",
+                "array"
+            ],
+            "items": {
+                "type": "string",
+                "minLength": 1
+            },
+            "minLength": 1,
+            "minItems": 2
+        }
+    }
+}

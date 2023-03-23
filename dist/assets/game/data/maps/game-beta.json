@@ -1,0 +1,41 @@
+{
+    "$schema": "../../schema/map.schema.json",
+    "path": {
+        "handles": [{
+            "point": {
+                "x": 10,
+                "y": 10
+            }
+        }, {
+            "point": {
+                "x": 10,
+                "y": 10
+            }
+        }]
+    },
+    "decoration": {
+        "objects": [{
+            "image": "Neutral Tile 1",
+            "pos": {
+                "x": 200,
+                "y": 200
+            },
+            "dims": {
+                "width": 500,
+                "height": 500
+            }
+        }]
+    },
+    "towerExclusionZones": {
+        "zones": [{
+            "pos": {
+                "x": 200,
+                "y": 200
+            },
+            "dims": {
+                "width": 500,
+                "height": 500
+            }
+        }]
+    }
+}

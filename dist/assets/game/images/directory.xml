@@ -1,0 +1,40 @@
+<?xml version="1.1" encoding="UTF-8"?>
+<!DOCTYPE assets SYSTEM "../schema/asset-directory.dtd">
+<assets type="content-asset">
+    <asset>
+        <type>image</type>
+        <name>Neutral Tile 1</name>
+        <path>neutral-tile-1.svg</path>
+        <dims width="128" height="128"/>
+    </asset>
+    <asset>
+        <type>image</type>
+        <name>Neutral Tile 2</name>
+        <path>neutral-tile-2.svg</path>
+        <dims width="128" height="128"/>
+    </asset>
+    <asset>
+        <type>image</type>
+        <name>Neutral Tile 3</name>
+        <path>neutral-tile-3.svg</path>
+        <dims width="128" height="128"/>
+    </asset>
+    <asset>
+        <type>image</type>
+        <name>Neutral Tile 4</name>
+        <path>neutral-tile-4.svg</path>
+        <dims width="128" height="128"/>
+    </asset>
+    <asset>
+        <type>image</type>
+        <name>Neutral Tile 5</name>
+        <path>neutral-tile-5.svg</path>
+        <dims width="128" height="128"/>
+    </asset>
+    <asset>
+        <type>image</type>
+        <name>Neutral Tile 6</name>
+        <path>neutral-tile-6.svg</path>
+        <dims width="128" height="128"/>
+    </asset>
+</assets>

@@ -1,8 +1,39 @@
 html, body {
     margin: 0px;
     padding: 0px;
-    background: black;
+    background: white;
     overflow: hidden;
+    font-size: 30px;
+}
+
+header {
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+}
+
+header video {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    margin: auto;
+    min-height: 50%;
+    min-width: 50%;
+}
+
+main {
+    display: none;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    margin: 0px;
+    padding: 0px;
+    width: 100vw;
+    height: 100vh;
 }
 
 canvas {
@@ -10,3 +41,108 @@ canvas {
     padding: 0px;
     border: none;
 }
+
+#detach-button-host /* Opera */ {
+    display: none;
+}
+
+.loader {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100vw;
+    height: 100vh;
+    flex-direction: column;
+    display: flex;
+    text-align: center;
+    color: black;
+    justify-content: center;
+    gap: 30px;
+}
+
+#title {
+    font-size: 50px;
+}
+
+#percent {
+    font-size: 30px;
+}
+
+
+
+
+
+
+
+
+
+
+.log {
+    position: absolute;
+    left: 10%;
+    top: 20%;
+    width: 60vw;
+    height: 40vw;
+    color: white;
+    font-family: monospace;
+    display: none;
+    z-index: 1000000;
+}
+
+.log .log-header {
+    display: flex;
+    padding-left: 7px;
+    padding-right: 10px;
+    justify-content: space-between;
+    width: 100%;
+    font-size: 20px;
+    background: #141414ed;
+    color: #00ff00;
+    user-select: none;
+    cursor: move;
+}
+
+.log #log-close {
+    display: flex;
+    align-items: center;
+    font-size: 15px;
+    color: #ff3737;
+    cursor: pointer;
+}
+
+.log #log-entries {
+    flex: 1;
+    font-size: 12px;
+    background: #3e3e3eed;
+    width: 100%;
+    padding: 5px;
+    padding-bottom: 15px;
+    overflow: scroll
+}
+
+.log .log-entry {
+    display: flex;
+    gap: 15px;
+    margin-top: 5px;
+    padding-bottom: 5px;
+    border-bottom: 3px solid #6363635c;
+}
+
+.log .log-time {
+    display: flex;
+    align-items: center;
+}
+
+.log .log-time::before {
+    content: "[";
+    color: #b6b6b6;
+}
+
+.log .log-time::after {
+    content: "]";
+    color: #b6b6b6;
+}
+
+.log .log-entry .log-info { color: #ffffff; }
+.log .log-entry .log-warn { color: #ffcd63; }
+.log .log-entry .log-error { color: #ff9090; }

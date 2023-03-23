@@ -1,0 +1,15 @@
+<?xml version="1.1" encoding="UTF-8"?>
+<!DOCTYPE assets SYSTEM "../schema/data-directory.dtd">
+<assets type="data-asset">
+    <data>
+        <type>map</type>
+        <name>Game://Beta</name>
+        <path>./maps/game-beta.json</path>
+    </data>
+
+    <data>
+        <type>mode</type>
+        <name>Standard</name>
+        <path>./modes/standard.json</path>
+    </data>
+</assets>

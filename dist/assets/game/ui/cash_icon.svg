@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 27.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="UI" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 36.6 52.1" style="enable-background:new 0 0 36.6 52.1;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:#D19D71;}
+	.st1{fill:#D9AE88;}
+	.st2{fill:#E2C1A3;}
+	.st3{fill:none;stroke:#EEDCCB;stroke-width:2;stroke-miterlimit:10;}
+	.st4{fill:none;stroke:#F2DCA3;stroke-miterlimit:10;}
+	.st5{font-family:'DelightCandles';}
+	.st6{font-size:26px;}
+</style>
+<g id="Indicators">
+	<g id="cash">
+		<path class="st0" d="M20.2,0.8c-7,0.6-12.4,9-15.6,15.7c-3.3,6.8-4.1,14.6-2.2,21.9c1.8,6.7,6.1,13.1,15.8,12.3
+			c14-1.1,16.9-14.6,17.5-22c0.2-2.9-0.1-5.8-0.8-8.6C33.2,13.4,28.7,0.1,20.2,0.8z"/>
+		<path class="st1" d="M25.9,2.3c0,0,12,43.5-19.3,44.1C5.7,45.3-0.8,40,2.8,22.5C9,3.6,19.3-2,25.9,2.3z"/>
+		<path class="st2" d="M17.2,6.1c-1.4-0.5-3.8,1.8-5,3.5c-1.3,2-1.4,4.4-0.6,5.3c1.2,1.3,4.6-0.2,6.1-2.9S18.5,6.7,17.2,6.1z"/>
+		<path class="st3" d="M20,1.1c-7.1,0.6-12.5,9-15.7,15.7c-3.2,6.8-4.1,14.6-2.1,21.9C4,45.4,8.3,51.8,18,51
+			c14-1.1,16.9-14.6,17.5-22c0.2-2.9-0.1-5.8-0.8-8.6C33,13.7,28.5,0.4,20,1.1z"/>
+		<text transform="matrix(1 0 0 1 10.9438 38.1316)" class="st4 st5 st6">$</text>
+	</g>
+</g>
+</svg>

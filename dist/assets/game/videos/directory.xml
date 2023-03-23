@@ -1,0 +1,10 @@
+<?xml version="1.1" encoding="UTF-8"?>
+<!DOCTYPE assets SYSTEM "../schema/asset-directory.dtd">
+<assets type="content-asset">
+    <asset>
+        <type>video</type>
+        <name>Opening</name>
+        <path>./opening.mp4</path>
+        <dims width="1280" height="720"/>
+    </asset>
+</assets>

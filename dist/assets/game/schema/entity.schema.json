@@ -1,0 +1,90 @@
+{
+    "$schema": "http://json-schema.org/schema",
+    "required": [
+        "entities"
+    ],
+    "properties": {
+        "entities": {
+            "type": "array",
+            "items": {
+                "required": [
+                    "name",
+                    "texture",
+                    "speed",
+                    "cash",
+                    "hp",
+                    "to"
+                ],
+                "type": "object",
+                "properties": {
+                    "name": { "$ref": "#/$defs/name" },
+                    "speed": { "type": "number", "minimum": 0.1 },
+                    "hp": { "type": "number", "minimum": 1, "default": 1 },
+                    "cash": { "type": "number" },
+                    "texture": {
+                        "required": [
+                            "image"
+                        ],
+                        "type": "object",
+                        "default": {
+                            "image": ""
+                        },
+                        "properties": {
+                            "image": { "$ref": "#/$defs/animatable-image" },
+                            "dims": { "$ref": "#/$defs/dims" }
+                        }
+                    },
+                    "to": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "required": [
+                                "name",
+                                "count"
+                            ],
+                            "properties": {
+                                "name": { "$ref": "#/$defs/name" },
+                                "count": { "type": "number", "default": 1 }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "$defs": {
+        "name": {
+            "type": "string",
+            "minLength": 1
+        },
+        "dims": {
+            "type": "object",
+            "default": {
+                "width": 100,
+                "height": 100
+            },
+            "properties": {
+                "width": {
+                    "type": "number",
+                    "minimum": 0
+                },
+                "height": {
+                    "type": "number",
+                    "minimum": 0
+                }
+            }
+        },
+        "animatable-image": {
+            "type": [
+                "string",
+                "array"
+            ],
+            "items": {
+                "type": "string",
+                "minLength": 1
+            },
+            "minLength": 1,
+            "minItems": 2
+        }
+    }
+}

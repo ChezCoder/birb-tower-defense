@@ -1,0 +1,29 @@
+<?xml version="1.1" encoding="UTF-8"?>
+<!DOCTYPE assets SYSTEM "../schema/asset-directory.dtd">
+<assets type="content-asset">
+    <asset>
+        <type>image</type>
+        <name>Null Egg</name>
+        <path>./null_egg.svg</path>
+    </asset>
+    <asset>
+        <type>image</type>
+        <name>Sparrow Egg</name>
+        <path>./sparrow_egg.svg</path>
+    </asset>
+    <asset>
+        <type>image</type>
+        <name>Bluebird Egg</name>
+        <path>./bluebird_egg.svg</path>
+    </asset>
+    <asset>
+        <type>image</type>
+        <name>Blackbird Egg</name>
+        <path>./blackbird_egg.svg</path>
+    </asset>
+    <asset>
+        <type>image</type>
+        <name>Quail Egg</name>
+        <path>./quail_egg.svg</path>
+    </asset>
+</assets>
