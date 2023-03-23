@@ -23,9 +23,9 @@
     "webpack-cli": "^4.10.0",
     "webpack-dev-server": "^4.10.0"
   },
-  "name": "webpack-bootstrap",
-  "description": "webpack canvas boostrap starter",
-  "version": "3.2.0",
+  "name": "birb-tower-defense",
+  "description": "Birb Tower Defense by Fwuffy.tk!",
+  "version": "0.0.1",
   "main": "",
   "directories": {
     "test": "tests"
@@ -388,12 +388,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ChezCoder/webpack-bootstrap.git"
+    "url": "git+https://github.com/ChezCoder/birb-tower-defense.git"
   },
   "author": "ChezCoder",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/ChezCoder/webpack-bootstrap/issues"
+    "url": "https://github.com/ChezCoder/birb-tower-defense/issues"
   },
-  "homepage": "https://github.com/ChezCoder/webpack-bootstrap#readme"
+  "homepage": "https://github.com/ChezCoder/birb-tower-defense#readme.md"
 }
