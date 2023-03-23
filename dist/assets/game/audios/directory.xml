@@ -3,7 +3,92 @@
 <assets type="content-asset">
     <asset>
         <type>audio</type>
-        <name>lobby</name>
-        <path>./lobby.mp3</path>
+        <name>Jazz 1</name>
+        <path>./bgm/jazz-01.mp3</path>
+    </asset>
+    <asset>
+        <type>audio</type>
+        <name>Jazz 2</name>
+        <path>./bgm/jazz-02.mp3</path>
+    </asset>
+    <asset>
+        <type>audio</type>
+        <name>Jazz 3</name>
+        <path>./bgm/jazz-03.mp3</path>
+    </asset>
+    <asset>
+        <type>audio</type>
+        <name>Jazz 4</name>
+        <path>./bgm/jazz-04.mp3</path>
+    </asset>
+    <asset>
+        <type>audio</type>
+        <name>Jazz 5</name>
+        <path>./bgm/jazz-05.mp3</path>
+    </asset>
+    <asset>
+        <type>audio</type>
+        <name>Jazz 6</name>
+        <path>./bgm/jazz-06.mp3</path>
+    </asset>
+    <asset>
+        <type>audio</type>
+        <name>Jazz 7</name>
+        <path>./bgm/jazz-07.mp3</path>
+    </asset>
+    <asset>
+        <type>audio</type>
+        <name>Jazz 8</name>
+        <path>./bgm/jazz-08.mp3</path>
+    </asset>
+    <asset>
+        <type>audio</type>
+        <name>Jazz 9</name>
+        <path>./bgm/jazz-09.mp3</path>
+    </asset>
+    <asset>
+        <type>audio</type>
+        <name>Jazz 10</name>
+        <path>./bgm/jazz-10.mp3</path>
+    </asset>
+    <asset>
+        <type>audio</type>
+        <name>Jazz 11</name>
+        <path>./bgm/jazz-11.mp3</path>
+    </asset>
+    <asset>
+        <type>audio</type>
+        <name>Jazz 12</name>
+        <path>./bgm/jazz-12.mp3</path>
+    </asset>
+    <asset>
+        <type>audio</type>
+        <name>Jazz 13</name>
+        <path>./bgm/jazz-13.mp3</path>
+    </asset>
+    <asset>
+        <type>audio</type>
+        <name>Jazz 14</name>
+        <path>./bgm/jazz-14.mp3</path>
+    </asset>
+    <asset>
+        <type>audio</type>
+        <name>Jazz 15</name>
+        <path>./bgm/jazz-15.mp3</path>
+    </asset>
+    <asset>
+        <type>audio</type>
+        <name>Jazz 16</name>
+        <path>./bgm/jazz-16.mp3</path>
+    </asset>
+    <asset>
+        <type>audio</type>
+        <name>Jazz 17</name>
+        <path>./bgm/jazz-17.mp3</path>
+    </asset>
+    <asset>
+        <type>audio</type>
+        <name>Jazz 18</name>
+        <path>./bgm/jazz-18.mp3</path>
     </asset>
 </assets>
