@@ -1,4 +1,4 @@
-import Game from "./Game";
+import Game from "./BaseGame";
 
 export default class Loopable {
     private static _i: number = 0;

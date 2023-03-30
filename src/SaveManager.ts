@@ -21,46 +21,71 @@ export interface SaveData {
     cash: number
 }
 
+export interface UserData {
+    name: string
+    timestamp: number
+}
+
 // Local saves ONLY
 export namespace Saves {
-    export const SAVE_KEY = "td_saves";
     export const STORE_ENCODING = "binary";
     export const COMPRESSION_LEVEL = 6;
+    export const SAVE_KEY = "td_saves";
 
     export let currentSaveID: string;
     export let currentSaveData: SaveData;
-    let saves: SaveData[] = [];
+
+    let saves: {
+        save: SaveData[],
+        user: UserData | null
+    } = {
+        save: [],
+        user: null
+    };
+
+    export function getUser(): UserData | null {
+        return saves.user;
+    }
+    
+    export function setUser(name: string) {
+        saves.user = {
+            "name": name,
+            "timestamp": Date.now()
+        }
+    }
 
     export function listSaveIDs(): string[] {
-        return saves.map(save => save.id);
+        return saves.save.map(save => save.id);
     }
 
     export function getSave(): boolean {
-        const save = saves.find(save => save.id == currentSaveID);
-
-        if (save) {
-            currentSaveData = save;
-            return true;
+        if (saves.save.length > 0) {
+            const save = saves.save.find(save => save.id == currentSaveID);
+    
+            if (save) {
+                currentSaveData = save;
+                return true;
+            }
+    
+            currentSaveID = currentSaveData.id;
         }
-
-        currentSaveID = currentSaveData.id;
         return false;
     }
 
     export function setSave() {
-        const saveIndex = saves.findIndex(save => save.id == currentSaveID);
+        const saveIndex = saves.save.findIndex(save => save.id == currentSaveID);
 
         if (saveIndex) {
-            saves[saveIndex] = currentSaveData;
+            saves.save[saveIndex] = currentSaveData;
         } else {
-            saves.push(currentSaveData);
+            saves.save.push(currentSaveData);
         }
     }
 
     export function createSave(saveName: string): string {
         const id = Math.floor(Math.random() * 10 ** 20).toString(26);
 
-        saves.push({
+        saves.save.push({
             "id": id,
             "name": saveName,
             "round": 1,
@@ -74,18 +99,17 @@ export namespace Saves {
     }
 
     export function deleteSave(id: string): boolean {
-        const saveIndex = saves.findIndex(save => save.id == id);
+        const saveIndex = saves.save.findIndex(save => save.id == id);
 
         if (saveIndex != -1) {
-            saves.splice(saveIndex, 1);
+            saves.save.splice(saveIndex, 1);
             save();
             return true;
         }
-
         return false;
     }
 
-    export function load(): boolean {
+    export function load() {
         const rawSaves = window.localStorage.getItem(SAVE_KEY);
 
         if (rawSaves) {
@@ -93,14 +117,9 @@ export namespace Saves {
                 const decompressedData = brotli.decompress(Buffer.from(rawSaves, STORE_ENCODING));
                 saves = JSON.parse(Buffer.from(decompressedData).toString());
             } catch (e) {
-                saves = [];
                 Console.error("SaveManager: Failed to load saves from localStorage");
-                return false;
             }
-        } else {
-            saves = [];
         }
-        return true;
     }
 
     export function save(): boolean {

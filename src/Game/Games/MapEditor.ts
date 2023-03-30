@@ -1,4 +1,4 @@
-import Game from "../Game";
+import Game from "../../lib/BaseGame";
 // import { MathUtils, Vector2 } from "../Util";
 // import CubicBezierCurve from "./Objects/BezierCurve";
 // import ControlHandle from "./Objects/ControlHandle";

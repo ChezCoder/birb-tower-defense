@@ -1,7 +1,7 @@
 import { AssetManager } from "../../AssetManager";
-import Game from "../../Game";
-import Loopable from "../../Loopable";
-import { Dimension2, LerpUtils, MathUtils, Vector2 } from "../../Util";
+import Game from "../../lib/BaseGame";
+import Loopable from "../../lib/Loopable";
+import { Dimension2, LerpUtils, MathUtils, Vector2 } from "../../lib/Util";
 
 export default class Button extends Loopable {
     public readonly assetName: string;

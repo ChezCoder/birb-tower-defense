@@ -1,6 +1,6 @@
-import { Force, SimpleVector2, Vector2 } from "../../Util";
-import Game from "../../Game";
-import Loopable from "../../Loopable";
+import { Force, SimpleVector2, Vector2 } from "../../lib/Util";
+import Game from "../../lib/BaseGame";
+import Loopable from "../../lib/Loopable";
 import ControlPoint from "./ControlPoint";
 
 export interface SimpleHandle {

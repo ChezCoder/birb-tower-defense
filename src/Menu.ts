@@ -1,5 +1,6 @@
-import MapEditor from "./Game/MapEditor";
-import TowerDefense from "./Game/TowerDefense";
+import { $HEADER } from "./ElementDefinitions";
+import MapEditor from "./Game/Games/MapEditor";
+import TowerDefense from "./Game/Games/TowerDefense";
 import { GameLoader } from "./GameLoader";
 import { Saves } from "./SaveManager";
 
@@ -7,7 +8,7 @@ export namespace Menu {
     export function loadMainMenu() {
         const $savesSelector = $<HTMLSelectElement>("#saves");
 
-        $("header").hide();
+        $HEADER.hide();
     
         $savesSelector.on("change", e => {
             if (e.target.value) {

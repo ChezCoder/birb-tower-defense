@@ -1,9 +1,11 @@
+import { LOG_ENTRIES } from "./ElementDefinitions";
 import { GameLoader } from "./GameLoader";
+import { Force, Vector2 } from "./lib/Util";
 
 type LogGenerator = (msg: any) => void;
 
 export namespace Console {
-    const element: HTMLDivElement = <HTMLDivElement> document.getElementById("log-entries")!;
+    const element: HTMLDivElement = LOG_ENTRIES;
     const _template: string = `<div class="log-entry"><span class="log-time">{time}</span><span class="log-{type}">{msg}</span></div>`;
     
     export const log: LogGenerator = createLogGenerator("log");
@@ -11,7 +13,6 @@ export namespace Console {
     export const error: LogGenerator = createLogGenerator("error");
     
     export const throwError = (err: Error | ErrorConstructor, msg: string = "") => {
-        console.log(err instanceof Error);
         if (err instanceof Error) {
             error(err.message);
             return err;
@@ -53,12 +54,49 @@ export namespace Console {
         };
     }
 
-    window.addEventListener("keypress", ev => ev.key == "`" ? GameLoader.toggleDebugLog() : null);
-    
     (<any>window)._GameConsole = {
         "log": log,
         "warn": warn,
         "error": error,
         "clear": clear
     };
+
+    export function initialize() {
+        const $DRAGGABLE = $("#log-draggable");
+        const $LOG = $("#log");
+        
+        let location: Vector2 = new Vector2(window.innerWidth / 2, window.innerHeight / 2);
+        let offset: Force = new Force(0, 0);
+        let dragging = false;
+        
+        $DRAGGABLE.on("mousedown", ev => {
+            offset = location.toForce(new Vector2(ev.clientX, ev.clientY));
+            dragging = true
+        });
+
+        $(window).on("keypress", ev => {
+            (ev.key == "`" ? GameLoader.toggleDebugLog() : null);
+            dragging = false;
+            moveLogTo(location);
+        });
+
+        $(window).on("mouseup", () => dragging = false);
+    
+        $(window).on("mousemove", ev => {
+            if (dragging) {
+                const newloc = new Vector2(ev.clientX, ev.clientY)
+                newloc.addForce(offset);
+                location = newloc;
+                moveLogTo(location);
+            }
+        });
+    
+        function moveLogTo(location: Vector2) {
+            const w = $LOG[0].clientWidth;
+            const h = $LOG[0].clientHeight;
+
+            $LOG[0].style.left = `${location.x - w / 2}px`;
+            $LOG[0].style.top = `${location.y - h / 2}px`;
+        }
+    }
 }

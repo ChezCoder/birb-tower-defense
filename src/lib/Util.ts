@@ -73,6 +73,10 @@ export class Vector2 {
         return new Vector2(vector1.x + vector2.x, vector1.y + vector2.y);
     }
 
+    public static addForce(vector: Vector2, force: Force): Vector2 {
+        return Vector2.add(vector, force.toVector());
+    }
+
     public static between(vector: Vector2, topLeft: Vector2, bottomRight: Vector2) {
         return MathUtils.between(vector.x, topLeft.x, bottomRight.x) && MathUtils.between(vector.y, topLeft.y, bottomRight.y);
     }
@@ -197,8 +201,14 @@ export class Raycast {
 }
 
 export namespace Random {
-    export function random(min: number = 0, max: number = 100) {
-        return Math.floor(Math.random() * (max - min + 1) + min);
+    /**
+     * Exclusive
+     * ```js
+     * Random.random(19, 2) // Random number from 18-2
+     * ```
+     */
+    export function random(max: number = 2, min: number = 0, rounded: boolean = true) {
+        return (rounded ? Math.floor : (n: number) => n)((Math.random() * (max - min)) + min);
     }
 
     export function weightedRandom(weightMap: WeightMap): string {
@@ -236,6 +246,13 @@ export namespace TextUtils {
         ctx.font = oldFont;
         
 		return textm;
+    }
+
+    export function metricsToDim2(metrics: TextMetrics): Dimension2 {
+        return {
+            "width": Math.abs(metrics.actualBoundingBoxLeft) + Math.abs(metrics.actualBoundingBoxRight),
+            "height": Math.abs(metrics.actualBoundingBoxAscent) + Math.abs(metrics.actualBoundingBoxDescent)
+        };
     }
     
     export function measureTextHeight(text: string, font: string): number {
@@ -284,7 +301,7 @@ export namespace Utils {
 	/**
 	 * @deprecated
 	 */
-	 export function setMouseCursor(cursorSource: string = "default") {
+	export function setMouseCursor(cursorSource: string = "default") {
         document.body.style.cursor = cursorSource || "default";
     }
 }
@@ -579,9 +596,10 @@ export namespace LerpUtils {
         private readonly duration: number;
         public startTime: number;
         public clamped: boolean;
-        public lerpFunction: LerpFunction = Functions.Linear;
+        public lerpFunction: LerpFunction;
 
-        constructor(from: number, to: number, duration: number, clamped: boolean = true) {
+        constructor(lerpFunction: LerpFunction, from: number, to: number, duration: number, clamped: boolean = true) {
+            this.lerpFunction = lerpFunction;
             this.from = from;
             this.to = to;
             this.duration = duration;
@@ -591,9 +609,16 @@ export namespace LerpUtils {
 
         public value(currentTime: number = Date.now()): number {
             if (this.clamped)
-                return LerpUtils.lerp(this.from, this.to, MathUtils.clamp((currentTime - this.startTime) / this.duration), this.lerpFunction);
+                return lerp(this.from, this.to, MathUtils.clamp((currentTime - this.startTime) / this.duration), this.lerpFunction);
             else
-                return LerpUtils.lerp(this.from, this.to, (currentTime - this.startTime) / this.duration, this.lerpFunction);
+                return lerp(this.from, this.to, (currentTime - this.startTime) / this.duration, this.lerpFunction);
+        }
+
+        public tValue(t: number): number {
+            if (this.clamped)
+                return lerp(this.from, this.to, MathUtils.clamp(t), this.lerpFunction);
+            else
+                return lerp(this.from, this.to, t, this.lerpFunction);
         }
 
         public reset() {
@@ -605,9 +630,41 @@ export namespace LerpUtils {
         }
     }
 
-	export function lerp(from: number, to: number, time: number, f: LerpFunction = Functions.Linear) {
+    export class LerpedValue {
+        public _lerpFunction: LerpFunction;
+        public _from: number;
+        public _to: number;
+        public _time = 0;
+        public rate;
+
+
+        constructor(from: number, to: number, rate: number, func: LerpFunction) {
+            this.rate = rate;
+            this._from = from;
+            this._to = to;
+            this._time = 0;
+            this._lerpFunction = func;
+        }
+
+        public get value(): number {
+            return lerp(this._from, this._to, this._time, this._lerpFunction);
+        }
+
+        public tick() {
+            this._time += this.rate;
+        }
+    }
+
+	export function lerp(from: number, to: number, time: number, f: LerpFunction = Functions.Linear): number {
 		return BezierUtils.linear(from, to, f(time));
 	}
+
+    export function vector(from: Vector2, to: Vector2, time: number, f: LerpFunction = Functions.Linear): Vector2 {
+        return new Vector2(
+            lerp(from.x, to.x, time, f),
+            lerp(from.y, to.y, time, f)
+        );
+    }
 
     export namespace Functions {
         export const Linear: LerpFunction = x => x;

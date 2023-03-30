@@ -1,6 +1,6 @@
-import { LerpUtils, MathUtils, Vector2 } from "../../Util";
-import Game from "../../Game";
-import Loopable from "../../Loopable";
+import { LerpUtils, MathUtils, Vector2 } from "../../lib/Util";
+import Game from "../../lib/BaseGame";
+import Loopable from "../../lib/Loopable";
 
 export default class ControlPoint extends Loopable {
     public location: Vector2;

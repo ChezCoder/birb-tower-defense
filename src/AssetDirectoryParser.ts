@@ -46,21 +46,33 @@ export namespace AssetDirectoryParser {
                     for (const asset of xmlDoc.querySelectorAll("assets > asset")) {
                         const type = asset.getElementsByTagName("type")[0].textContent!;
                         const name = asset.getElementsByTagName("name")[0].textContent!;
+
                         try {
                             const assetPath = new URL(asset.getElementsByTagName("path")[0].textContent!, url).href;
-                
+                            let dimEl: Element | null = null;
+
                             switch (type) {
                                 case "directory":
                                     assets.push(...await loadDirectories(assetPath));
                                     break;
                                 case "image":
                                 case "video":
+                                    dimEl = asset.getElementsByTagName("dims")[0];
                                 case "audio":
-                                    assets.push({
+                                    const ulasset: UnloadedAsset = {
                                         "name": name,
                                         "type": type == "image" ? "img" : type,
-                                        "path": assetPath
-                                    });
+                                        "path": assetPath,
+                                    }
+                                    
+                                    if (dimEl) {
+                                        ulasset.dims = {
+                                            "width": Number.parseInt(dimEl.getAttribute("width") || "500"),
+                                            "height": Number.parseInt(dimEl.getAttribute("height") || "500")
+                                        }
+                                    }
+                                    
+                                    assets.push(ulasset);
                                     break;
                                 default:
                                     Console.error(`AssetDirectoryParser: ${xmlPath}: Unrecognized asset type "${type}"`);

@@ -1,8 +1,8 @@
-import Game from "../Game";
-import { Saves } from "../SaveManager";
-import { MathUtils, Vector2 } from "../Util";
-import CubicBezierCurve from "./Objects/BezierCurve";
-import ControlHandle from "./Objects/ControlHandle";
+import Game from "../../lib/BaseGame";
+import { Saves } from "../../SaveManager";
+import { MathUtils, Vector2 } from "../../lib/Util";
+import CubicBezierCurve from "../Objects/BezierCurve";
+import ControlHandle from "../Objects/ControlHandle";
 
 export default class TowerDefense extends Game {
     private bezier: CubicBezierCurve = new CubicBezierCurve(true);
@@ -19,7 +19,7 @@ export default class TowerDefense extends Game {
         this.renderObjects.push(this.bezier);
     }
     
-    protected loop() {
+    public loop() {
         this.ctx.beginPath();
         this.ctx.fillStyle = "black";
         this.ctx.font = "30px Arial";

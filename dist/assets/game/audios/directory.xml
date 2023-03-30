@@ -3,6 +3,20 @@
 <assets type="content-asset">
     <asset>
         <type>audio</type>
+        <name>Wow SFX</name>
+        <path>./sfx/uwu-wow.mp3</path>
+    </asset>
+
+
+
+    
+    <asset>
+        <type>audio</type>
+        <name>Menu Screen</name>
+        <path>./bgm/sunny-days.mp3</path>
+    </asset>
+    <asset>
+        <type>audio</type>
         <name>Jazz 1</name>
         <path>./bgm/jazz-01.mp3</path>
     </asset>
@@ -90,5 +104,10 @@
         <type>audio</type>
         <name>Jazz 18</name>
         <path>./bgm/jazz-18.mp3</path>
+    </asset>
+    <asset>
+        <type>audio</type>
+        <name>VIBE</name>
+        <path>./thenewsweetgroove.mp3</path>
     </asset>
 </assets>

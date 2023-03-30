@@ -1,6 +1,6 @@
 <?xml version="1.1" encoding="UTF-8"?>
-<!DOCTYPE assets SYSTEM "./dtd/asset-directory.dtd">
-<assets>
+<!DOCTYPE assets SYSTEM "./schema/asset-directory.dtd">
+<assets type="content-asset">
     <asset>
         <type>directory</type>
         <name>Image Assets Directory</name>
@@ -13,6 +13,11 @@
     </asset>
     <asset>
         <type>directory</type>
+        <name>Entity Assets Directory</name>
+        <path>./entities/directory.xml</path>
+    </asset>
+    <asset>
+        <type>directory</type>
         <name>Video Assets Directory</name>
         <path>./videos/directory.xml</path>
     </asset>
@@ -20,10 +25,5 @@
         <type>directory</type>
         <name>Audio Assets Directory</name>
         <path>./audios/directory.xml</path>
-    </asset>
-    <asset>
-        <type>directory</type>
-        <name>Definitions Directory</name>
-        <path>./maps/directory.xml</path>
     </asset>
 </assets>
