@@ -25,7 +25,7 @@
   },
   "name": "birb-tower-defense",
   "description": "Birb Tower Defense by Fwuffy.tk!",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "main": "",
   "directories": {
     "test": "tests"
