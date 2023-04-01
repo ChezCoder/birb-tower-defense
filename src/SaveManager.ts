@@ -26,6 +26,12 @@ export interface UserData {
     timestamp: number
 }
 
+export interface SessionData {
+    save: SaveData[]
+    user: UserData | null
+    lastLogin: number
+}
+
 // Local saves ONLY
 export namespace Saves {
     export const STORE_ENCODING = "binary";
@@ -35,32 +41,36 @@ export namespace Saves {
     export let currentSaveID: string;
     export let currentSaveData: SaveData;
 
-    let saves: {
-        save: SaveData[],
-        user: UserData | null
-    } = {
+    let session: SessionData = {
         save: [],
-        user: null
+        user: null,
+        lastLogin: -1
     };
 
+    let lastLogin: number = 0;
+
+    export function getLastLogin(): number {
+        return lastLogin;
+    }
+
     export function getUser(): UserData | null {
-        return saves.user;
+        return session.user;
     }
     
     export function setUser(name: string) {
-        saves.user = {
+        session.user = {
             "name": name,
             "timestamp": Date.now()
         }
     }
 
     export function listSaveIDs(): string[] {
-        return saves.save.map(save => save.id);
+        return session.save.map(save => save.id);
     }
 
     export function getSave(): boolean {
-        if (saves.save.length > 0) {
-            const save = saves.save.find(save => save.id == currentSaveID);
+        if (session.save.length > 0) {
+            const save = session.save.find(save => save.id == currentSaveID);
     
             if (save) {
                 currentSaveData = save;
@@ -73,19 +83,19 @@ export namespace Saves {
     }
 
     export function setSave() {
-        const saveIndex = saves.save.findIndex(save => save.id == currentSaveID);
+        const saveIndex = session.save.findIndex(save => save.id == currentSaveID);
 
         if (saveIndex) {
-            saves.save[saveIndex] = currentSaveData;
+            session.save[saveIndex] = currentSaveData;
         } else {
-            saves.save.push(currentSaveData);
+            session.save.push(currentSaveData);
         }
     }
 
     export function createSave(saveName: string): string {
         const id = Math.floor(Math.random() * 10 ** 20).toString(26);
 
-        saves.save.push({
+        session.save.push({
             "id": id,
             "name": saveName,
             "round": 1,
@@ -99,10 +109,10 @@ export namespace Saves {
     }
 
     export function deleteSave(id: string): boolean {
-        const saveIndex = saves.save.findIndex(save => save.id == id);
+        const saveIndex = session.save.findIndex(save => save.id == id);
 
         if (saveIndex != -1) {
-            saves.save.splice(saveIndex, 1);
+            session.save.splice(saveIndex, 1);
             save();
             return true;
         }
@@ -115,7 +125,9 @@ export namespace Saves {
         if (rawSaves) {
             try {
                 const decompressedData = brotli.decompress(Buffer.from(rawSaves, STORE_ENCODING));
-                saves = JSON.parse(Buffer.from(decompressedData).toString());
+                session = JSON.parse(Buffer.from(decompressedData).toString());
+                lastLogin = session.lastLogin.valueOf();
+                session.lastLogin = Date.now();
             } catch (e) {
                 Console.error("SaveManager: Failed to load saves from localStorage");
             }
@@ -124,7 +136,7 @@ export namespace Saves {
 
     export function save(): boolean {
         try {
-            const compressedData = brotli.compress(Buffer.from(JSON.stringify(saves)), {
+            const compressedData = brotli.compress(Buffer.from(JSON.stringify(session)), {
                 "mode": 1,
                 "quality": 11,
                 "lgwin": 22

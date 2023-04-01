@@ -42,7 +42,11 @@ export namespace GameLoader {
             }).finally(async () => {
                 Console.log(`GameLoader: Finished loading! (took ${(Date.now() - timestamp) / 1000}s)`);
                 try {
-                    res(<T> await startGame());
+                    const g = await startGame();
+                    
+                    if (game) {
+                        res(<T> g);
+                    }
                 } catch (err) {
                     rej(err);
                 }
@@ -89,9 +93,8 @@ export namespace GameLoader {
             Console.log(`GameLoader: Launching new '${GameClass.name}' game`);
             try {
                 game = new GameClass($<HTMLCanvasElement>("#game")[0]);
-                TextUtils.ctx = game.ctx;
                 res(game);
-                game.__start();
+                TextUtils.ctx = game.ctx;
             } catch (err) {
                 rej(err);
             }

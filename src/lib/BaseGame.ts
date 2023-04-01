@@ -1,6 +1,6 @@
-import { TextUtils } from "./Util";
-import { Input } from "./UserInput";
+import { Console } from "../Console";
 import Loopable from "./Loopable";
+import { Input } from "./UserInput";
 
 export interface GameConstructor<G extends Game = Game> {
     new(ctx: HTMLCanvasElement): G;
@@ -16,16 +16,18 @@ export default abstract class Game {
     protected lastFrameTimestamp: number = Date.now();
     protected renderObjects: Loopable[] = [];
     
+    private started = false;
     private stopped = false;
     private gameEndRes: Function = () => {};
 
     public readonly frame = () => {
         if (!this.stopped) {
             requestAnimationFrame(this.frame.bind(this));
-            this.cursor = "default";
             this.input.step();
             
             if (this.clear) {
+                this.cursor = "default";
+                
                 this.ctx.save();
                 this.ctx.beginPath();
                 this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
@@ -51,27 +53,32 @@ export default abstract class Game {
         this.gameEndRes.apply(this);
     }
     
-    public readonly __start = () => {
-        this.setup();
-        this.frame();
+    /**
+     * Used in promise chaining in GameLoader
+     * @returns A promise that resolves when the game ends, for use in Promise chaining
+     */
+    public readonly start: () => Promise<void> = () => {
+        if (!this.started) {
+            this.started = true;
+            this.setup();
+            this.frame();
+    
+            return new Promise(res => {
+                this.gameEndRes = res;
+            });
+        } else {
+            Console.warn("BaseGame: Attempted to start an already initialized game");
+            return new Promise(res => res());
+        }
     }
 
     public readonly isStopped = () => {
         return this.stopped;
     };
 
-    /**
-     * Use in promise chaining when using `GameLoader#load()`
-     */
-    public readonly waitForGameEnd: () => Promise<void> = () => {
-        return new Promise(res => {
-            this.gameEndRes = res;
-        });
-    }
-
     public get deltaTime(): number { return (Date.now() - this.lastFrameTimestamp) / 1000; }
-    public set cursor(cursor: string) { this.canvas.style.cursor = cursor; }
-    public get cursor(): string { return this.canvas.style.cursor; }
+    public set cursor(cursor: string) { document.body.style.cursor = cursor; }
+    public get cursor(): string { return document.body.style.cursor; }
 
     /**
      * Do not instantiate game class without using a GameLoader

@@ -669,10 +669,12 @@ export namespace LerpUtils {
     export namespace Functions {
         export const Linear: LerpFunction = x => x;
         export const Reverse: LerpFunction = x => 1 - x;
+
         export const EaseIn: LerpFunction = x => x * x;
-        export const EaseOut: LerpFunction = x => EaseIn(Reverse(x));
-        export const EaseInOut: LerpFunction = x => LerpUtils.lerp(EaseIn(x), EaseOut(x), x);
-        export const Spike: LerpFunction = x => x <= 0.5 ? EaseIn(x / 0.5) : EaseIn(Reverse(x) / 0.5);
+        export const EaseOut: LerpFunction = x => Reverse(EaseIn(Reverse(x)));
+        export const EaseInOut: LerpFunction = x => x * x * (3 - 2 * x);
+        export const Spike: LerpFunction = x => Math.min(2 * x, 2 * Reverse(x));
+        export const SmoothSpike: LerpFunction = x => 4 * x * Reverse(x);
     }
 }
 

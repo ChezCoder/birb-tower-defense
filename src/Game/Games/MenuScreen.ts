@@ -3,58 +3,71 @@ import { AudioSystem } from "../../AudioSystem";
 import { Console } from "../../Console";
 import { VIDEOS } from "../../ElementDefinitions";
 import Game from "../../lib/BaseGame";
-import { Routine, WaitFor, WaitForSeconds } from "../../lib/Scheduler";
-import { Random } from "../../lib/Util";
+import { Routine, WaitForSeconds } from "../../lib/Scheduler";
+import { LerpUtils, Vector2 } from "../../lib/Util";
+import { Saves } from "../../SaveManager";
+import UIParticleButton from "../Objects/UIParticleButton";
 
 export default class MenuScreen extends Game {
+    public skipOpening: boolean = true;
+
     private openingDone: boolean = false;
     private menuScreenEnable: boolean = false;
     private openingVideo = AssetManager.load<HTMLVideoElement>("Opening")!;
 
+    private rate: number = 0.01;
+
+    private alpha: number = 0;
+    private bufferedAlpha: number = 0;
+
+    private beatOffsetAmount: number = 0;
+    private beatstart: number = 0;
+
+    private startButton: UIParticleButton = new UIParticleButton("Start", "40px Metropolis", new Vector2(this.canvas.width / 2, this.canvas.height / 2));
+    private startButtonBGRectW: number = 0;
+    private bufferedStartButtonBGRectW: number = 0;
+    
+    private settingsButton: UIParticleButton = new UIParticleButton("Settings", "40px Metropolis", new Vector2(this.canvas.width / 2, this.canvas.height * 0.6));
+    private settingsButtonBGRectW: number = 0;
+    private bufferedSettingsButtonBGRectW: number = 0;
+
     public setup(): void {
-        this.openingVideo.muted = false;
-        this.openingVideo.volume = 0.1;
-        this.openingVideo.style.transition = "opacity 1s";
-
-        VIDEOS.appendChild(this.openingVideo);
-
-        this.openingVideo.play();
-
-        setTimeout(() => {
-            Console.log("MenuScreen: Starting menu screen");
-            this.menuScreenEnable = true;
-        }, 8500);
-
-        setTimeout(() => {
+        if (this.skipOpening) {
+            this._menuScreenSequence();
+        } else {
+            this.openingVideo.muted = false;
+            this.openingVideo.volume = 0.1;
+            this.openingVideo.style.transition = "opacity 3s";
+    
+            VIDEOS.appendChild(this.openingVideo);
+    
             const instance = this;
-
+            
             Routine.startTask(function*() {
-                for (let vol = instance.openingVideo.volume;vol > 0;vol -= instance.openingVideo.volume / 100) {
-                    instance.openingVideo.volume = vol;
-                    yield new WaitForSeconds(0.05);
-                }
+                instance.openingVideo.play();
+    
+                yield new WaitForSeconds(8.5);
+    
+                instance._menuScreenSequence();
             });
-
-            const bgm = AssetManager.load<HTMLAudioElement>("Menu Screen");
-            
-            AudioSystem.play(bgm, {
-                "fadeIn": 10000,
-                "volume": 0.1,
-                "loop": true
-            });
-        }, 10000);
-
-        (window as any).AssetManager = AssetManager;
-
-        this.openingVideo.onended = () => {
-            Console.log("MenuScreen: Destroying video instance");
-            this.openingDone = true;
-            this.openingVideo.style.opacity = "0";
-            
-            setTimeout(() => {
+    
+            (window as any).AssetManager = AssetManager;
+    
+            this.openingVideo.onended = () => {
+                Console.log("MenuScreen: Destroying video instance");
+                this.openingDone = true;
                 this.openingVideo.remove();
-            }, 1000);
-        };
+            };
+        }
+
+        this.startButton.onhover = this.settingsButton.onhover = function() {
+            this.releaseParticles();
+        }
+
+        this.startButton.onmouseover = this.settingsButton.onmouseover = () => {
+            const fx = AssetManager.load<HTMLAudioElement>("UI Hover");
+            AudioSystem.play(fx, { "volume": .2 });
+        }
     }
     
     public loop(): void {
@@ -63,9 +76,74 @@ export default class MenuScreen extends Game {
         }
 
         if (this.menuScreenEnable) {
+            this._beatOffset();
             this._backgroundComponents();
             this._gameTitle();
+            this._gameButtons();
         }
+
+        this.alpha = LerpUtils.lerp(this.alpha, this.bufferedAlpha, this.rate);
+        this.startButtonBGRectW = LerpUtils.lerp(this.startButtonBGRectW, this.bufferedStartButtonBGRectW, this.rate * 4);
+        this.settingsButtonBGRectW = LerpUtils.lerp(this.settingsButtonBGRectW, this.bufferedSettingsButtonBGRectW, this.rate * 4);
+    }
+
+    private _menuScreenSequence() {
+        const instance = this;
+
+        Saves.save();
+
+        Routine.startTask(function*() {
+            Console.log("MenuScreen: Starting menu screen");
+
+            instance.openingVideo.style.opacity = "0";
+            instance.menuScreenEnable = true;
+
+            if (instance.skipOpening) {
+                instance.bufferedAlpha = 1;
+            } else {
+                instance.alpha = instance.bufferedAlpha = 1;
+            }
+    
+            let volFrom = instance.openingVideo.volume.valueOf();
+    
+            if (!instance.skipOpening) {
+                for (let vol = instance.openingVideo.volume;vol > volFrom * 0.3;vol -= volFrom / 100) {
+                    instance.openingVideo.volume = vol;
+                    yield new WaitForSeconds(0.05);
+                }
+            }
+            
+            const bgm = AssetManager.load<HTMLAudioElement>("Menu Screen");
+                
+            bgm.onplay = () => {
+                instance.beatstart = Date.now();
+                Console.log("MenuScreen: Restarting bgm playback");
+            }
+
+            AudioSystem.play(bgm, {
+                "fadeIn": instance.skipOpening ? 1000 : 5000,
+                "volume": 0.15,
+                "loop": true
+            });
+    
+            for (let vol = instance.openingVideo.volume;vol > volFrom * 0;vol -= volFrom / 100) {
+                instance.openingVideo.volume = vol;
+                yield new WaitForSeconds(0.05);
+            }
+        });
+    }
+
+    private _beatOffset() {
+        const jitteredDelay = 390;
+        const bpmDelay = 60 * 1000 / 90;
+        const beatProgression = ((Date.now() + jitteredDelay) - this.beatstart) % bpmDelay;
+        const earliness = 4;
+        
+        this.beatOffsetAmount = Math.min(1, (beatProgression * earliness) / bpmDelay);
+    }
+
+    private _getBeatScale(): number {
+        return LerpUtils.lerp(1, 1.02, this.beatOffsetAmount, LerpUtils.Functions.SmoothSpike);
     }
 
     private _gameTitle() {
@@ -75,20 +153,82 @@ export default class MenuScreen extends Game {
         this.ctx.textAlign = "center";
         this.ctx.textBaseline = "middle";
         this.ctx.fillStyle = "#000000";
-        this.ctx.font = "50px Metropolis";
+        this.ctx.font = "70px Metropolis";
+        this.ctx.globalAlpha = this.alpha;
+        this.ctx.translate(this.canvas.width / 2, this.canvas.height * 0.28);
+        this.ctx.scale(this._getBeatScale(), this._getBeatScale());
+        
+        this.ctx.fillText("MenuScreen#_gameTitle()", 0, 0, this.canvas.width * 0.9);
+        
+        this.ctx.closePath();
+        this.ctx.restore();
 
-        this.ctx.fillText("MenuScreen#_gameTitle()", this.canvas.width / 2, this.canvas.height / 2);
+
+
+        this.ctx.save();
+        this.ctx.beginPath();
+
+        this.ctx.textAlign = "center";
+        this.ctx.textBaseline = "middle";
+        this.ctx.fillStyle = "#000000";
+        this.ctx.font = "30px Metropolis";
+        this.ctx.globalAlpha = this.alpha;
+        this.ctx.translate(this.canvas.width / 2, this.canvas.height * 0.36);
+        this.ctx.scale(this._getBeatScale(), this._getBeatScale());
+        
+        this.ctx.fillText("Running v" + BUILD_VERSION, 0, 0, this.canvas.width * 0.9);
+        
+        this.ctx.closePath();
+        this.ctx.restore();
+    }
+
+    private _gameButtons() {
+        this.startButton.alpha = this.settingsButton.alpha = this.alpha;
+
+        const pad = 40;
+
+        this.bufferedStartButtonBGRectW = -this.canvas.width * .25;
+        this.bufferedSettingsButtonBGRectW = -this.canvas.width * .25;
+
+        if (this.startButton.clickableRegion.hovering) {
+            this.bufferedStartButtonBGRectW = this.canvas.width * 1.25;
+        }
+        
+        if (this.settingsButton.clickableRegion.hovering) {
+            this.bufferedSettingsButtonBGRectW = this.canvas.width * 1.25;
+        }
+
+        this.ctx.save();
+        this.ctx.beginPath();
+
+        this.ctx.fillStyle = "#00ffff";
+
+        const startCorner = new Vector2(0, this.startButton.location.y - pad);
+        this.ctx.rect(startCorner.x, startCorner.y, this.startButtonBGRectW, pad * 2);
+        this.ctx.fill();
+
+        this.ctx.closePath();
+        this.ctx.beginPath();
+        
+        this.ctx.fillStyle = "#ff7f00";
+        
+        const settingsCorner = new Vector2(0, this.settingsButton.location.y - pad);
+        this.ctx.rect(settingsCorner.x, settingsCorner.y, this.settingsButtonBGRectW, pad * 2);
+        this.ctx.fill();
 
         this.ctx.closePath();
         this.ctx.restore();
 
+        this.startButton.loop(this.ctx, this);
+        this.settingsButton.loop(this.ctx, this);
     }
-
+    
     private _backgroundComponents() {
         this.ctx.save();
         this.ctx.beginPath();
         
         this.ctx.fillStyle = "#ffffff";
+        this.ctx.globalAlpha = this.alpha;
         
         this.ctx.rect(0, 0, this.canvas.width, this.canvas.height);
         this.ctx.fill();

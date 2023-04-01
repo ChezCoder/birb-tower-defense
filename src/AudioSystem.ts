@@ -24,6 +24,8 @@ export namespace AudioSystem {
             const fadeInDuration = (settings.fadeIn || 0);
             const fadeOutDuration = (settings.fadeOut || 0);
 
+            // BUG playback rate does not go intoo calculations
+
             audio.playbackRate = settings.speed || 1;
             audio.preservesPitch = !!settings.preservePitch;
 
@@ -31,7 +33,7 @@ export namespace AudioSystem {
 
             const setupAudioSettings = () => {
                 audio.currentTime = start;
-                audio.volume = (fadeInDuration == 0) ? 0 : maxVolume;
+                audio.volume = (fadeInDuration == 0) ? maxVolume : 0;
 
                 fadeInEndTime = Date.now() + (settings.fadeIn || 0);
                 fadeOutStartTime = Date.now() + duration - (settings.fadeOut || 0);

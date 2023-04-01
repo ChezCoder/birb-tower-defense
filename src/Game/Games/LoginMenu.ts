@@ -182,6 +182,7 @@ export default class LoginMenu extends Game {
         this._backgroundGrad();
         this._floaters();
         this._modalRect();
+        this._modalButtons();
         this._modalText();
         this._modalInputs();
 
@@ -263,8 +264,6 @@ export default class LoginMenu extends Game {
     }
 
     private _modalText(): void {
-        this.ctx.fillStyle = "#ffffff";
-
         this.ctx.save();
         this.ctx.beginPath();
         
@@ -272,6 +271,7 @@ export default class LoginMenu extends Game {
         this.ctx.textBaseline = "middle";
         this.ctx.font = "Bold " + (50 * this.scale) + "px Metropolis";
         this.ctx.globalAlpha = this.alpha;
+        this.ctx.fillStyle = "#ffffff";
 
         this.ctx.translate(this.canvas.width / 2, this.canvas.height / 2 + this.y + this.textY);
         this.ctx.fillText(this.text, 0, 0);
@@ -289,22 +289,51 @@ export default class LoginMenu extends Game {
         this.ctx.textBaseline = "middle";
         this.ctx.font = "Bold " + (30 * this.scale) + "px Metropolis";
         this.ctx.globalAlpha = Math.min(this.alpha, this.subTextAlpha);
+        this.ctx.fillStyle = "#ffffff";
 
         this.ctx.translate(this.canvas.width / 2, this.canvas.height / 2 + this.y - 10);
         this.ctx.fillText(this.subText, 0, 0, this.dimensions.width * this.scale * 0.9);
         
         this.ctx.closePath();
         this.ctx.restore();
+    }
 
+    private _modalButtons(): void {
+        const Y_OFFSET = 70;
 
+        // TODO
+        // this.ctx.save();
+        // this.ctx.beginPath();
+        // this.ctx.globalAlpha = Math.min(this.alpha, this.buttonAlpha);
+        // this.ctx.strokeStyle = "#4e4e50";
+        // this.ctx.fillStyle = "#00000000";
+        // this.ctx.lineWidth = 3;
+        
+        // const boxPad = 10;
 
-        const Y_OFFSET = 50;
+        // this.ctx.roundRect(textPosTL.x - boxPad, textPosTL.y - boxPad, tdims.width + 2 * boxPad, tdims.height + 2 * boxPad, 10);
+        // this.ctx.fill();
+        // this.ctx.stroke();
+        
+        // this.ctx.closePath();
+        // this.ctx.restore();
+        
+        
+        
         this.ctx.save();
+        this.ctx.beginPath();
+
+        this.ctx.globalAlpha = Math.min(this.alpha, this.buttonAlpha);
         this.ctx.textAlign = "center";
         this.ctx.textBaseline = "middle";
         this.ctx.font = "40px Metropolis";
-        this.ctx.globalAlpha = Math.min(this.alpha, this.buttonAlpha);
-        
+        this.ctx.fillStyle = "#ffffff";
+
+        if (this.setupButtonClickableRegion.hovering) {
+            this.ctx.fillStyle = "#cfcfcf";
+            this.cursor = "pointer";
+        }
+
         const tmetrics = TextUtils.measureTextMetrics(this.midButton, "40px Metropolis");
         const tdims = TextUtils.metricsToDim2(tmetrics);
         const textPosTL = new Vector2(this.canvas.width / 2 - tdims.width / 2, this.canvas.height / 2 - tdims.height / 2 + Y_OFFSET);
@@ -312,18 +341,11 @@ export default class LoginMenu extends Game {
         this.setupButtonClickableRegion.location = textPosTL;
         this.setupButtonClickableRegion.dimensions = tdims;
         
-        if (this.setupButtonClickableRegion.hovering) {
-            this.ctx.fillStyle = "#c0c0c0";
-            this.cursor = "pointer";
-        }
-
         this.ctx.translate(this.canvas.width / 2, this.canvas.height / 2 + Y_OFFSET);
         this.ctx.fillText(this.midButton, 0, 0);
-        this.ctx.strokeText(this.midButton, 0, 0);
-        
+
         this.ctx.closePath();
         this.ctx.restore();
-
 
 
 
@@ -335,6 +357,7 @@ export default class LoginMenu extends Game {
         this.ctx.textBaseline = "middle";
         this.ctx.font = "30px Metropolis";
         this.ctx.globalAlpha = Math.min(this.alpha, this.signinButtonAlpha);
+        this.ctx.fillStyle = "#ffffff";
 
         const signinTMetrics = TextUtils.measureTextMetrics("Sign In", "30px Metropolis");
         const signinDims = TextUtils.metricsToDim2(signinTMetrics);
@@ -399,6 +422,6 @@ export default class LoginMenu extends Game {
             clearInterval(slowdownTimer);
             TextInputManager.discard(this.usernameInput.id);
             GameLoader.endGame();
-        }, 2000);
+        }, 2500);
     }
 }

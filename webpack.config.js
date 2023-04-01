@@ -3,8 +3,15 @@
 const path = require("path");
 const webpack = require("webpack");
 
+const packageJSON = require("./package.json");
+
 /** @type {webpack.Configuration}  */
 const config = {
+    plugins: [
+        new webpack.DefinePlugin({
+            BUILD_VERSION: `"${packageJSON.version}"`,
+        })
+    ],
     devServer: {
         port: 3000,
         static: {
@@ -15,9 +22,9 @@ const config = {
         client: {
             overlay: true,
             logging: "info",
-            progress: true
+            progress: true,
         },
-        hot: true
+        hot: true,
     },
     mode: "development",
     entry: "./src/index.ts",

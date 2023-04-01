@@ -3,6 +3,11 @@
 <assets type="content-asset">
     <asset>
         <type>audio</type>
+        <name>UI Hover</name>
+        <path>./ui/hover.mp3</path>
+    </asset>
+    <asset>
+        <type>audio</type>
         <name>Wow SFX</name>
         <path>./sfx/uwu-wow.mp3</path>
     </asset>
