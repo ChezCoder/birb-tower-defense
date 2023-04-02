@@ -1,4 +1,5 @@
 import { Console } from "./Console";
+import { Locale, Translatable } from "./Game/TranslatableText";
 
 // import brotli from "brotli-wasm"; // TODO
 const Buffer = require("buffer").Buffer;
@@ -21,6 +22,10 @@ export interface SaveData {
     cash: number;
 }
 
+export interface SettingsData {
+    language: Locale
+}
+
 export interface UserData {
     name: string;
     timestamp: number;
@@ -29,6 +34,7 @@ export interface UserData {
 export interface SessionData {
     save: SaveData[];
     user: UserData | null;
+    settings: SettingsData;
     lastLogin: number;
 }
 
@@ -38,12 +44,19 @@ export namespace Saves {
     export const COMPRESSION_LEVEL = 6;
     export const SAVE_KEY = "td_saves";
 
+    export const BROWSER_LOCALE: Locale = <Locale> navigator.language.replace("-", "_").toLowerCase();
+
+    const DEFAULT_SETTINGS: SettingsData = {
+        "language": BROWSER_LOCALE || "en_us"
+    };
+
     export let currentSaveID: string;
     export let currentSaveData: SaveData;
 
     let session: SessionData = {
         save: [],
         user: null,
+        settings: DEFAULT_SETTINGS,
         lastLogin: -1
     };
 
@@ -62,6 +75,14 @@ export namespace Saves {
             "name": name,
             "timestamp": Date.now()
         }
+    }
+
+    export function setSetting<T extends keyof SettingsData>(setting: T, value: SettingsData[T]) {
+        session.settings[setting] = value;
+    }
+
+    export function getSetting<T extends keyof SettingsData>(setting: T): SettingsData[T] {
+        return session.settings[setting] || DEFAULT_SETTINGS[setting];
     }
 
     export function listSaveIDs(): string[] {
@@ -125,9 +146,14 @@ export namespace Saves {
         if (rawSaves) {
             try {
                 const decompressedData = brotli.decompress(Buffer.from(rawSaves, STORE_ENCODING));
-                session = JSON.parse(Buffer.from(decompressedData).toString());
+                const data = JSON.parse(Buffer.from(decompressedData).toString());
+
+                if (data.lastLogin) session.lastLogin = data.lastLogin;
+                if (data.save) session.save = data.save;
+                if (data.settings) session.settings = data.settings;
+                if (data.user) session.user = data.user;
+
                 lastLogin = session.lastLogin.valueOf();
-                session.lastLogin = Date.now();
             } catch (e) {
                 Console.error("SaveManager: Failed to load saves from localStorage");
             }
@@ -136,6 +162,8 @@ export namespace Saves {
 
     export function save(): boolean {
         try {
+            session.lastLogin = Date.now();
+            
             const compressedData = brotli.compress(Buffer.from(JSON.stringify(session)), {
                 "mode": 1,
                 "quality": 11,

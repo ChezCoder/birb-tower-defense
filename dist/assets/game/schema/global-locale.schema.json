@@ -1,0 +1,40 @@
+{
+    "$schema": "http://json-schema.org/schema",
+    "required": [ "translations" ],
+    "properties": {
+        "translations": {
+            "required": [
+                "general.text.wip",
+        
+                "login.text.signupgreeting1",
+                "login.text.signupgreeting2",
+                "login.text.signupgreeting3",
+                "login.text.signupgreeting4",
+                "login.text.signupgreeting5",
+                "login.text.logingreeting1",
+                "login.text.logingreeting2",
+                "login.text.logingreeting3",
+                "login.text.logingreeting4",
+                "login.text.logingreeting5",
+                "login.text.logingreeting6",
+                "login.text.inputplaceholder",
+                "login.button.signup1",
+                "login.button.signup2",
+                "login.button.login",
+        
+                "menu.button.start",
+                "menu.button.settings",
+                "menu.text.versioning"
+            ],
+
+            
+            "type": "object",
+            "propertyNames": {
+                "pattern": "^\\w+\\.\\w+\\.\\w+$"
+            },
+            "patternProperties": {
+                "": { "type": "string" }
+            }
+        }
+    }
+}

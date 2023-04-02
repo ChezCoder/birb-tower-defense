@@ -1,4 +1,25 @@
 {
+  "name": "birb-tower-defense",
+  "author": "ChezCoder",
+  "description": "Birb Tower Defense by Fwuffy.tk!",
+  "version": "0.0.3-0",
+  "license": "ISC",
+  "main": "",
+  "scripts": {
+    "test": "jest ./tests --passWithNoTests",
+    "dev": "webpack serve",
+    "obfuscate": "javascript-obfuscator ./dist/bundle.js -o ./dist/bundle.js",
+    "build": "webpack build",
+    "production": "npm run test && npm run build && npm run obfuscate"
+  },
+  "homepage": "https://github.com/ChezCoder/birb-tower-defense#readme.md",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ChezCoder/birb-tower-defense.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ChezCoder/birb-tower-defense/issues"
+  },
   "jest": {
     "verbose": true,
     "transform": {
@@ -23,10 +44,6 @@
     "webpack-cli": "^4.10.0",
     "webpack-dev-server": "^4.10.0"
   },
-  "name": "birb-tower-defense",
-  "description": "Birb Tower Defense by Fwuffy.tk!",
-  "version": "0.0.3-0",
-  "main": "",
   "directories": {
     "test": "tests"
   },
@@ -378,22 +395,5 @@
     "yargs": "^17.5.1",
     "yargs-parser": "^21.1.1",
     "yocto-queue": "^0.1.0"
-  },
-  "scripts": {
-    "test": "jest ./tests --passWithNoTests",
-    "dev": "webpack serve",
-    "obfuscate": "javascript-obfuscator ./dist/bundle.js -o ./dist/bundle.js",
-    "build": "webpack build",
-    "production": "npm run test && npm run build && npm run obfuscate"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/ChezCoder/birb-tower-defense.git"
-  },
-  "author": "ChezCoder",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/ChezCoder/birb-tower-defense/issues"
-  },
-  "homepage": "https://github.com/ChezCoder/birb-tower-defense#readme.md"
+  }
 }

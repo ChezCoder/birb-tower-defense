@@ -1,0 +1,26 @@
+{
+    "$schema": "../schema/global-locale.schema.json",
+    "translations": {
+        "general.text.wip": "開発中で",
+    
+        "login.text.signupgreeting1": "いらっしゃいませ！",
+        "login.text.signupgreeting2": "やあ！",
+        "login.text.signupgreeting3": "はじめましょう！",
+        "login.text.signupgreeting4": "はじめまして!",
+        "login.text.signupgreeting5": "こんにちは！",
+        "login.text.logingreeting1": "おかえり!",
+        "login.text.logingreeting2": "またあったね",
+        "login.text.logingreeting3": "もしもし!",
+        "login.text.logingreeting4": "調子はどう",
+        "login.text.logingreeting5": "またお会いできてよかったです！",
+        "login.text.logingreeting6": "挨拶",
+        "login.text.inputplaceholder": "ユーザー名...",
+        "login.button.signup1": "さあ行こう!",
+        "login.button.signup2": "ログイン",
+        "login.button.login": "ログイン",
+    
+        "menu.button.start": "始める",
+        "menu.button.settings": "設定",
+        "menu.text.versioning": "{} を実行中"
+    }
+}

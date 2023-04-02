@@ -6,6 +6,7 @@ import { Dimension2, Force, LerpUtils, MathUtils, Random, TextUtils, Vector2, An
 import { Saves } from "../../SaveManager";
 import { TextInputManager } from "../../TextInputManager";
 import ClickableRegion from "../Objects/ClickableRegion";
+import { Translatable } from "../TranslatableText";
 
 interface Floater {
     type: "square" | "circle" | "triangle";
@@ -75,40 +76,38 @@ export default class LoginMenu extends Game {
         this.usernameInput.styles.textAlign = "center";
         this.usernameInput.styles.fontWeight = "lighter";
         this.usernameInput.styles.fontFamily = "Metropolis";
-        this.usernameInput._element.placeholder = "Username...";
+        this.usernameInput._element.placeholder = Translatable.text("login.text.inputplaceholder");
 
         this.setupButtonClickableRegion.enabled = false;
         this.signinButtonClickableRegion.enabled = false;
 
 
-        
-        Saves.load();
 
         const user = Saves.getUser();
 
         if (user) {
             const greetings = [
-                "Welcome back",
-                "Hello again",
-                "Hi again",
-                "Hows it going",
-                "Great to see you",
-                "Greetings"
+                Translatable.text("login.text.logingreeting1"),
+                Translatable.text("login.text.logingreeting2"),
+                Translatable.text("login.text.logingreeting3"),
+                Translatable.text("login.text.logingreeting4"),
+                Translatable.text("login.text.logingreeting5"),
+                Translatable.text("login.text.logingreeting6")
             ];
-            this.midButton = "Log In";
+            this.midButton = Translatable.text("login.button.login");
             this.text = Random.sample(greetings)[0];
             this.hasUser = true;
             this.subText = user.name;
             Console.log(`LoginMenu: User data found: ${user.name}, skipping user setup`);
         } else {
             const greetings = [
-                "Welcome!",
-                "Hello there!",
-                "Let's get started!",
-                "Nice to meet you!",
-                "Hi there!"
+                Translatable.text("login.text.signupgreeting1"),
+                Translatable.text("login.text.signupgreeting2"),
+                Translatable.text("login.text.signupgreeting3"),
+                Translatable.text("login.text.signupgreeting4"),
+                Translatable.text("login.text.signupgreeting5")
             ];
-            this.midButton = "Setup";
+            this.midButton = Translatable.text("login.button.signup1");
             this.text = Random.sample(greetings)[0];
             Console.log("LoginMenu: No user data found, starting user setup");
         }
@@ -358,7 +357,8 @@ export default class LoginMenu extends Game {
         this.ctx.globalAlpha = Math.min(this.alpha, this.signinButtonAlpha);
         this.ctx.fillStyle = "#ffffff";
 
-        const signinTMetrics = TextUtils.measureTextMetrics("Sign In", "30px Metropolis");
+        const signinButtonText = Translatable.text("login.button.signup2");
+        const signinTMetrics = TextUtils.measureTextMetrics(signinButtonText, "30px Metropolis");
         const signinDims = TextUtils.metricsToDim2(signinTMetrics);
         const signinTextPosTL = new Vector2(this.canvas.width / 2 - signinDims.width / 2, this.canvas.height / 2 - signinDims.height / 2 + SIGNIN_Y_OFFSET);
         const validUsername = this.usernameInput.value.trim().length > 0;
@@ -374,8 +374,8 @@ export default class LoginMenu extends Game {
         }
 
         this.ctx.translate(this.canvas.width / 2, this.canvas.height / 2 + SIGNIN_Y_OFFSET);
-        this.ctx.strokeText("Sign In", 0, 0);
-        this.ctx.fillText("Sign In", 0, 0);
+        this.ctx.strokeText(signinButtonText, 0, 0);
+        this.ctx.fillText(signinButtonText, 0, 0);
         
         this.ctx.closePath();
         this.ctx.restore();

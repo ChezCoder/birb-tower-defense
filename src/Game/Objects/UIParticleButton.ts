@@ -13,7 +13,7 @@ export default class UIParticleButton extends Loopable {
     public text: string;
     public font: string;
     public location: Vector2;
-    public disabled: boolean = false;
+    public disabled: boolean = true;
     public alpha: number = 0;
     public cursor: string;
 
@@ -35,6 +35,8 @@ export default class UIParticleButton extends Loopable {
     }
     
     public loop(ctx: CanvasRenderingContext2D, game: Game) {
+        this.clickableRegion.enabled = !this.disabled;
+
         ctx.save();
         ctx.beginPath();
         

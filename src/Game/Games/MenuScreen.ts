@@ -9,6 +9,7 @@ import { LerpUtils, Vector2 } from "../../lib/Util";
 import { Saves } from "../../SaveManager";
 import Tooltip from "../Objects/Tooltip";
 import UIParticleButton from "../Objects/UIParticleButton";
+import { Translatable } from "../TranslatableText";
 
 export default class MenuScreen extends Game {
     public skipOpening: boolean = true;
@@ -28,22 +29,24 @@ export default class MenuScreen extends Game {
     private beatOffsetAmount: number = 0;
     private beatstart: number = 0;
 
-    private startButton: UIParticleButton = new UIParticleButton("Start", "40px Metropolis", new Vector2(0, 0));
+    private startButton: UIParticleButton = new UIParticleButton(Translatable.text("menu.button.start"), "40px Metropolis", new Vector2(0, 0));
     private startButtonBGRectW: number = 0;
     private bufferedStartButtonBGRectW: number = 0;
     
-    private settingsButton: UIParticleButton = new UIParticleButton("Settings", "40px Metropolis", new Vector2(0, 0));
+    private settingsButton: UIParticleButton = new UIParticleButton(Translatable.text("menu.button.settings"), "40px Metropolis", new Vector2(0, 0));
     private settingsButtonBGRectW: number = 0;
     private bufferedSettingsButtonBGRectW: number = 0;
 
     private tooltip: Tooltip = new Tooltip(this.canvas.width * 0.25);
 
     public setup(): void {
+        Console.log(`MenuScreen: Skipping opening: ${this.skipOpening}`);
         if (this.skipOpening) {
             this._menuScreenSequence();
         } else {
             this.openingVideo.muted = false;
             this.openingVideo.volume = 0.1;
+            this.openingVideo.style.opacity = "1";
             this.openingVideo.style.transition = "opacity 3s";
     
             VIDEOS.appendChild(this.openingVideo);
@@ -73,10 +76,7 @@ export default class MenuScreen extends Game {
 
         this.startButton.onclick = () => {
             this.startButton.disabled = true;
-            this.startButton.clickableRegion.enabled = false;
-
             this.settingsButton.disabled = true;
-            this.settingsButton.clickableRegion.enabled = false;
 
             // TODO transparent + scaled up version of the button behind it
 
@@ -87,15 +87,19 @@ export default class MenuScreen extends Game {
                 instance.bufferedAlpha = 0;
                 instance.rate *= 1.5;
 
-                for (let vol = instance.bgmPlayback.maxVolume;vol > 0;vol -= instance.bgmPlayback.maxVolume / 100) {
-                    instance.bgmPlayback.audio.volume = vol;
-                    yield new WaitForSeconds(0.02);
+                if (instance.bgmPlayback) {
+                    for (let vol = instance.bgmPlayback.maxVolume;vol > 0;vol -= instance.bgmPlayback.maxVolume / 100) {
+                        instance.bgmPlayback.audio.volume = vol;
+                        yield new WaitForSeconds(0.02);
+                    }
+
+                    instance.bgmPlayback.stop();
+                } else {
+                    yield new WaitForSeconds(2);
                 }
 
-                instance.bgmPlayback.stop();
                 GameLoader.endGame();
             });
-
         };
     }
     
@@ -130,6 +134,9 @@ export default class MenuScreen extends Game {
             instance.menuScreenDrawEnable = true;
             instance.menuScreenInteractEnable = true;
 
+            instance.startButton.disabled = false;
+            instance.settingsButton.disabled = false;
+
             if (instance.skipOpening) {
                 instance.bufferedAlpha = 1;
             } else {
@@ -145,16 +152,18 @@ export default class MenuScreen extends Game {
                 }
             }
             
-            const bgm = AssetManager.load<HTMLAudioElement>("Menu Screen");
-                
-            instance.bgmPlayback = AudioSystem.play(bgm, {
-                "fadeIn": instance.skipOpening ? 1000 : 2000,
-                "volume": 0.15,
-                "loop": true
-            });
-
-            instance.bgmPlayback.onplay = () => instance.beatstart = Date.now();
+            if (instance.menuScreenInteractEnable) {
+                const bgm = AssetManager.load<HTMLAudioElement>("Menu Screen");
+                    
+                instance.bgmPlayback = AudioSystem.play(bgm, {
+                    "fadeIn": instance.skipOpening ? 1000 : 2000,
+                    "volume": 0.15,
+                    "loop": true
+                });
     
+                instance.bgmPlayback.onplay = () => instance.beatstart = Date.now();
+            }
+
             for (let vol = instance.openingVideo.volume;vol > volFrom * 0;vol -= volFrom / 100) {
                 instance.openingVideo.volume = vol;
                 yield new WaitForSeconds(0.02);
@@ -205,7 +214,7 @@ export default class MenuScreen extends Game {
         this.ctx.translate(this.canvas.width / 2, this.canvas.height * 0.36);
         this.ctx.scale(this._getBeatScale(), this._getBeatScale());
         
-        this.ctx.fillText("Running v" + BUILD_VERSION, 0, 0, this.canvas.width * 0.9);
+        this.ctx.fillText(Translatable.text("menu.text.versioning").replace("{}", BUILD_VERSION), 0, 0, this.canvas.width * 0.9);
         
         this.ctx.closePath();
         this.ctx.restore();
@@ -230,7 +239,7 @@ export default class MenuScreen extends Game {
             // TODO settings
             // this.bufferedSettingsButtonBGRectW = this.canvas.width * 1.25;
             this.settingsButton.cursor = "none";
-            this.tooltip.text = "Feature work in progress";
+            this.tooltip.text = Translatable.text("general.text.wip");
             this.tooltip.enabled = true;
         }
 

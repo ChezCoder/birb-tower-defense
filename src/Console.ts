@@ -56,7 +56,7 @@ export namespace Console {
             if (element.children.length > 0) {
                 const s = element.scrollHeight - element.scrollTop - element.clientHeight
 
-                if (s <= 40) _scrollToBottom();
+                if (s <= 100) _scrollToBottom();
             }
         };
     }

@@ -1,0 +1,26 @@
+{
+    "$schema": "../schema/global-locale.schema.json",
+    "translations": {
+        "general.text.wip": "功能开发中",
+    
+        "login.text.signupgreeting1": "欢迎!",
+        "login.text.signupgreeting2": "你好呀！",
+        "login.text.signupgreeting3": "让我们开始吧!",
+        "login.text.signupgreeting4": "很高兴见到你!",
+        "login.text.signupgreeting5": "你好!",
+        "login.text.logingreeting1": "欢迎回!",
+        "login.text.logingreeting2": "再一次问好",
+        "login.text.logingreeting3": "Hi again",
+        "login.text.logingreeting4": "怎么样了!",
+        "login.text.logingreeting5": "很高兴再次见到你!",
+        "login.text.logingreeting6": "问候!",
+        "login.text.inputplaceholder": "用户名...",
+        "login.button.signup1": "好的!",
+        "login.button.signup2": "登入",
+        "login.button.login": "登录",
+    
+        "menu.button.start": "开始",
+        "menu.button.settings": "设置",
+        "menu.text.versioning": "运行 {}"
+    }
+}

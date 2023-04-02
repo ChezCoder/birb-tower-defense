@@ -1,0 +1,26 @@
+{
+    "$schema": "../schema/global-locale.schema.json",
+    "translations": {
+        "general.text.wip": "Fonctionnalité en cours de développement",
+    
+        "login.text.signupgreeting1": "Bienvenue!",
+        "login.text.signupgreeting2": "Bonjour à tous!",
+        "login.text.signupgreeting3": "C'est parti!",
+        "login.text.signupgreeting4": "Enchanté de vous rencontrer!",
+        "login.text.signupgreeting5": "Bonjour!",
+        "login.text.logingreeting1": "Bienvenue à nouveau",
+        "login.text.logingreeting2": "Bonjour à nouveau",
+        "login.text.logingreeting3": "Rebonjour",
+        "login.text.logingreeting4": "Comment ça va",
+        "login.text.logingreeting5": "Heureux de vous voir",
+        "login.text.logingreeting6": "Salutations",
+        "login.text.inputplaceholder": "Nom d'utilisateur...",
+        "login.button.signup1": "Configuration",
+        "login.button.signup2": "S'inscrire",
+        "login.button.login": "Connexion",
+    
+        "menu.button.start": "Commencer",
+        "menu.button.settings": "Paramètres",
+        "menu.text.versioning": "Exécution v{}"
+    }
+}
