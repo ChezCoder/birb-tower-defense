@@ -4,9 +4,9 @@ import Loopable from "../../lib/Loopable";
 import ControlPoint from "./ControlPoint";
 
 export interface SimpleHandle {
-    point: SimpleVector2
-    handle1: SimpleVector2
-    handle2: SimpleVector2
+    point: SimpleVector2;
+    handle1: SimpleVector2;
+    handle2: SimpleVector2;
 }
 
 export default class ControlHandle extends Loopable {

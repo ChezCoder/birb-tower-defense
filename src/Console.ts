@@ -4,6 +4,13 @@ import { Force, Vector2 } from "./lib/Util";
 
 type LogGenerator = (msg: any) => void;
 
+export type ExposableConsole = {
+    log: LogGenerator
+    warn: LogGenerator
+    error: LogGenerator
+    clear: LogGenerator
+}
+
 export namespace Console {
     const element: HTMLDivElement = LOG_ENTRIES;
     const _template: string = `<div class="log-entry"><span class="log-time">{time}</span><span class="log-{type}">{msg}</span></div>`;
@@ -54,7 +61,7 @@ export namespace Console {
         };
     }
 
-    (<any>window)._GameConsole = {
+    window.GameConsole = {
         "log": log,
         "warn": warn,
         "error": error,

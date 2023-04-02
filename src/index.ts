@@ -9,13 +9,13 @@ $(async () => {
     
     await GameLoader.load(LoginMenu).then(game => game.start());
     
-    await GameLoader.load(MenuScreen).then(game => {
-        const timeSinceLastLogin = Date.now() - Saves.getLastLogin();
-        
-        game.skipOpening = timeSinceLastLogin <= 1000 * 60 * 60 * 3;
-
-        return game.start();
-    });
-
-    Console.log(`Sequence End`);
+    while (GameLoader.inscope) {
+        await GameLoader.load(MenuScreen).then(game => {
+            const timeSinceLastLogin = Date.now() - Saves.getLastLogin();
+            
+            game.skipOpening = timeSinceLastLogin <= 1000 * 60 * 60 * 3;
+    
+            return game.start();
+        });
+    }
 });

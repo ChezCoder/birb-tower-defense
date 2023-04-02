@@ -10,6 +10,7 @@ export namespace GameLoader {
     export const BASE_DIRECTORY = "/assets/game/directory.xml";
 
     export let game: Game | null;
+    export let inscope: boolean = true;
     let GameClass: GameConstructor;
     let timestamp: number;
 

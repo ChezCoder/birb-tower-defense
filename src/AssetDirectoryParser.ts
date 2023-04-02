@@ -1,12 +1,12 @@
 import { Console } from "./Console"
 
 export interface UnloadedAsset {
-    type: "img" | "video" | "audio"
-    name: string
-    path: string
+    type: "img" | "video" | "audio";
+    name: string;
+    path: string;
     dims?: {
-        width: number
-        height: number
+        width: number;
+        height: number;
     }
 }
 

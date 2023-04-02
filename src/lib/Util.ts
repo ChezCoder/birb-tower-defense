@@ -1,13 +1,13 @@
 export type WeightMap = {[key: string]: number};
 
 export interface SimpleVector2 {
-    x: number
-    y: number
+    x: number;
+    y: number;
 }
 
 export interface SimpleForce {
-    magnitude: number
-    radians: number
+    magnitude: number;
+    radians: number;
 }
 
 export interface Dimension2 {

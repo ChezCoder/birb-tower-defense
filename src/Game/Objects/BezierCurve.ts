@@ -6,12 +6,12 @@ import Loopable from "../../lib/Loopable";
 import ControlHandle, { SimpleHandle } from "./ControlHandle";
 
 export interface SimpleBezier {
-    handles: SimpleHandleConnector[]
+    handles: SimpleHandleConnector[];
 }
 
 interface SimpleHandleConnector {
-    point1: SimpleHandle
-    point2: SimpleHandle
+    point1: SimpleHandle;
+    point2: SimpleHandle;
 }
 
 class HandleConnector extends Loopable {

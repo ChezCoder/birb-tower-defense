@@ -14,22 +14,22 @@ namespace brotli {
 }
 
 export interface SaveData {
-    id: string
-    name: string
-    timestamp: number
-    round: number
-    cash: number
+    id: string;
+    name: string;
+    timestamp: number;
+    round: number;
+    cash: number;
 }
 
 export interface UserData {
-    name: string
-    timestamp: number
+    name: string;
+    timestamp: number;
 }
 
 export interface SessionData {
-    save: SaveData[]
-    user: UserData | null
-    lastLogin: number
+    save: SaveData[];
+    user: UserData | null;
+    lastLogin: number;
 }
 
 // Local saves ONLY

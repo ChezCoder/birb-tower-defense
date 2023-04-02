@@ -9,7 +9,7 @@ const packageJSON = require("./package.json");
 const config = {
     plugins: [
         new webpack.DefinePlugin({
-            BUILD_VERSION: `"${packageJSON.version}"`,
+            BUILD_VERSION: `"${packageJSON.version}"`
         })
     ],
     devServer: {

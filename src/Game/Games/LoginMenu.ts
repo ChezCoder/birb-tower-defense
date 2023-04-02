@@ -8,12 +8,12 @@ import { TextInputManager } from "../../TextInputManager";
 import ClickableRegion from "../Objects/ClickableRegion";
 
 interface Floater {
-    type: "square" | "circle" | "triangle"
-    pos: Vector2
-    size: number
-    vel: Force
-    ang: number
-    angm: number
+    type: "square" | "circle" | "triangle";
+    pos: Vector2;
+    size: number;
+    vel: Force;
+    ang: number;
+    angm: number;
 }
 
 export default class LoginMenu extends Game {
@@ -240,7 +240,6 @@ export default class LoginMenu extends Game {
                 floater.vel.degrees = newAngle + Random.random(40, -40)
                 floater.pos.addForce(floater.vel);
             }
-            (window as any).Random = Random
         });
     }
 
